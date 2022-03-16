@@ -14,8 +14,12 @@ function App() {
 
     const joinRoom = () =>{
         if (username !== ""){
-            socket.emit("join_room", room);
-            setShowChat(true);
+            if (username.length <= 8) {
+                socket.emit("join_room", room);
+                setShowChat(true);
+            }else{
+                alert("1-8 symbols please");
+            }
         }
     };
 
@@ -29,7 +33,10 @@ function App() {
                 placeholder="Username"
             onChange={(event) => {
                 setUsername(event.target.value);
-            }}/>
+            }}
+                onKeyPress={(event) => {
+                    event.key === "Enter" && joinRoom();
+                }}/>
             <button onClick={joinRoom}> Join </button>
         </div>
             )
